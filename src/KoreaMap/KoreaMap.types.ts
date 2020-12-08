@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export interface ChoroplethData {
-  regionName: RegionNameType;
+  name: RegionNameType;
   grade: number;
 }
 
@@ -12,7 +12,9 @@ export interface ChoroplethColor {
 
 export interface ChoroplethProps {
   data: Array<ChoroplethData>;
-  color: Array<ChoroplethColor>;
+  colors: Array<any>;
+  scale: 'provinces' | 'municipalitie' | 'submunicipalities';
+  isRegionNameVisible: boolean;
 }
 
 export interface PointProps {

@@ -1,3 +1,4 @@
-import KoreaMap from "./KoreaMap/KoreaMap";
+import KoreaMap from './KoreaMap/KoreaMap';
+import Scatter from './Scatter/Scatter';
 
-export { KoreaMap };
+export { KoreaMap, Scatter };
