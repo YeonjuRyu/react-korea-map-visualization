@@ -8,16 +8,8 @@ First, you must run the command below.
  npm install
  ``` 
 ### storybook <a id="storybook"></a>
-<<<<<<< HEAD
-
-```
-npm run storybook
-// output: > start-storybook -p 6006
-```
-=======
 After npm install, Run the command below to start storybook and see all UI components.
  ```
  npm run storybook
  // output: > start-storybook -p 6006
  ``` 
->>>>>>> 976a71be0598094f3fd7fe8702df0f36a5ca3c15
