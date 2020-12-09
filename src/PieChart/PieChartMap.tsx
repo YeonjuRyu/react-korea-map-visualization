@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import * as d3 from 'd3';
-import * as topojson from 'topojson';
 import PieChart from '../PieChart/PieChart';
 import KoreaMap from '../KoreaMap/KoreaMap';
-import { DEFAULT_MAP_OPTIONS } from '../../public/Constants';
+import { DEFAULT_MAP_OPTIONS } from '../Constants';
 
 const defaultColors = [
   '#FFE9F9',
@@ -17,13 +16,19 @@ const defaultColors = [
 const PieChartMap = ({ data, scale = 'provinces', ...props }) => {
   const [zoomScale, setZoomScale] = useState(1);
   const [isHoverBoxVisible, setHoverBoxVisibility] = useState(false);
-  const [hoverBoxPosition, setHoverBoxPosition] = useState();
-  const [hoveredData, setHoveredData] = useState();
+  const [hoverBoxPosition, setHoverBoxPosition] = useState<{
+    x: number;
+    y: number;
+  }>();
+  const [hoveredData, setHoveredData] = useState({});
   let projection = d3
     .geoMercator()
-    .center(DEFAULT_MAP_OPTIONS.CENTER)
+    .center([DEFAULT_MAP_OPTIONS.CENTER[0], DEFAULT_MAP_OPTIONS.CENTER[1]])
     .scale(DEFAULT_MAP_OPTIONS.SCALE)
-    .translate(DEFAULT_MAP_OPTIONS.TRANSLATE);
+    .translate([
+      DEFAULT_MAP_OPTIONS.TRANSLATE[0],
+      DEFAULT_MAP_OPTIONS.TRANSLATE[1],
+    ]);
 
   const handleOnMouseOver = useCallback(
     ({ onMouseOver, clientX, clientY, data }) => {
@@ -39,7 +44,7 @@ const PieChartMap = ({ data, scale = 'provinces', ...props }) => {
     setHoverBoxVisibility(false);
   }, []);
 
-  const getSumAllValues = useCallback(obj => {
+  const getSumAllValues: ({}) => number = useCallback(obj => {
     return Object.values(obj).reduce((a, b) => a + b, 0);
   }, []);
 
@@ -109,8 +114,7 @@ const PieChartMap = ({ data, scale = 'provinces', ...props }) => {
               display: 'flex',
               alignItems: 'center',
             }}>
-            <ul
-              style={{ listStyle: 'none', padding: 10, marginHorizontal: 10 }}>
+            <ul style={{ listStyle: 'none', padding: 10, margin: '0px 10px' }}>
               {Object.keys(hoveredData).map((key, index) => (
                 <li
                   style={{
@@ -129,7 +133,6 @@ const PieChartMap = ({ data, scale = 'provinces', ...props }) => {
                     }}
                   />
                   <div>
-                    {' '}
                     {`${key}: ${hoveredData[key]} (${(
                       (hoveredData[key] / getSumAllValues(hoveredData)) *
                       100

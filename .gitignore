@@ -8,9 +8,10 @@ node_modules/
 npm-debug.log
 
 
+
 # Visual Studio Code
 #
 .vscode/
 
-#build
-build/
+# after build
+dist/

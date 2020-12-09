@@ -1,52 +1,68 @@
 {
-  "name": "react-korea-map-visualization",
-  "version": "1.0.0",
-  "description": "",
-  "main": "build/index.js",
-  "module": "build/index.es.js",
+  "name": "skmvtest",
+  "username": "yeonjuryu",
+  "version": "1.0.7",
+  "description": "한국 지도 데이터 시각화를 위한 리액트 라이브러리 (개발 테스트)",
+  "module": "dist/index.js",
+  "browser": "dist/index.js",
   "files": [
-    "build"
+    "dist"
   ],
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
     "build": "rollup -c",
+    "build:types": "tsc --emitDeclarationOnly",
     "storybook": "start-storybook -p 6006",
     "storybook:export": "build-storybook"
   },
   "author": "yeonjuryu",
+  "types": "dist/types/index.d.ts",
   "license": "ISC",
   "peerDependencies": {
-    "@types/react": "^16.9.53",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
+    "@rollup/plugin-babel": "^5.2.2",
     "@rollup/plugin-commonjs": "^15.1.0",
+    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-url": "^6.0.0",
+    "@storybook/addon-knobs": "^6.0.27",
     "@storybook/react": "^6.0.27",
+    "@svgr/rollup": "^5.5.0",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
+    "@types/d3": "^5.16.4",
     "@types/jest": "^26.0.15",
+    "@types/react": "^16.9.53",
+    "@types/topojson-client": "^3.0.0",
     "babel-loader": "^8.1.0",
     "babel-preset-react-app": "^10.0.0",
+    "d3": "^6.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.1",
     "node-sass": "^4.14.1",
-    "rollup": "^2.32.1",
+    "react-spring": "^8.0.27",
+    "rollup": "^2.34.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^3.1.8",
     "rollup-plugin-typescript2": "^0.28.0",
+    "rollup-plugin-copy": "^3.3.0",
     "sass-loader": "^10.0.4",
     "styled-components": "^5.2.1",
+    "topojson-client": "^3.1.0",
     "ts-jest": "^26.4.2",
     "typescript": "^4.0.3"
   },
-  "dependencies": {
-    "@storybook/addon-knobs": "^6.0.27",
-    "@types/d3": "^5.16.3",
-    "d3": "^6.2.0",
-    "topojson-client": "^3.1.0"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YeonjuRyu/react-korea-map-visualization.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YeonjuRyu/react-korea-map-visualization/issues"
+  },
+  "homepage": "https://github.com/YeonjuRyu/react-korea-map-visualization#readme"
 }

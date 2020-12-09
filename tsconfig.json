@@ -1,13 +1,11 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "target": "es2017",
+    "target": "es5",
     "jsx": "react",
     "module": "esnext",
-    "allowJs": false,
     "checkJs": false,
     "noImplicitAny": false,
-    "noEmit": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "typeRoots": ["./node_modules/@types"],
@@ -17,7 +15,9 @@
     "watch": true,
     "pretty": true,
     "baseUrl": ".",
+    "declaration": true,
+    "declarationDir": "dist/types"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "build", "src/**/*.stories.tsx", "src/**/*.test.tsx"]
+  "include": ["src", "public"],
+  "exclude": ["node_modules", "**/*.stories.tsx", "src/**/*.test.tsx"]
 }

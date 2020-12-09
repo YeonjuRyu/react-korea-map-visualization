@@ -1,7 +1,15 @@
 import React, { useState, useCallback } from 'react';
-import { PieChartProps } from './PieChart.types';
-import './PieChart.scss';
 import * as d3 from 'd3';
+import { PieArcDatum } from 'd3-shape';
+
+type PieChartProps = {
+  data;
+  r: number;
+  transform;
+  colors?: Array<any>;
+  onMouseOver?;
+  onMouseOut?;
+};
 
 const PieChart = ({
   r = 10,
@@ -11,8 +19,12 @@ const PieChart = ({
   onMouseOver,
   onMouseOut,
 }: PieChartProps) => {
-  var pie = d3.pie().value(d => d[1]);
+  var pie = d3.pie<any>().value(d => d[1]);
   var data_ready = pie(Object.entries(data));
+  var path = d3
+    .arc<d3.PieArcDatum<any>>()
+    .innerRadius(0)
+    .outerRadius(r);
   const defaultColors = [
     '#FFE9F9',
     '#FFBDED',
@@ -40,12 +52,7 @@ const PieChart = ({
           <path
             fill={colors ? colors[data[0]] : defaultColors[index]}
             strokeWidth={3}
-            d={d3
-              .arc()
-              .startAngle(startAngle)
-              .endAngle(endAngle)
-              .innerRadius(0)
-              .outerRadius(r)()}
+            d={`${path.startAngle(startAngle).endAngle(endAngle)}`}
           />
         );
       })}

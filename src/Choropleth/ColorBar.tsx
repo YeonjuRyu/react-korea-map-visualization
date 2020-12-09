@@ -120,8 +120,10 @@ const ColorBar = ({
             </>
           ) : (
             <>
-              <text style={textStyle}>{data[0].scale.start}</text>
-              <text style={textStyle}>{data[data.length - 1].scale.end}</text>
+              <text style={textStyle}>{data[0].scale['start']}</text>
+              <text style={textStyle}>
+                {data[data.length - 1].scale['end']}
+              </text>
             </>
           )}
         </LinearGradientTextContainerStyle>
@@ -150,7 +152,7 @@ const ColorBar = ({
                 <text style={textStyle}>
                   {typeof item.scale === 'number'
                     ? item.scale
-                    : `${item.scale.start}~${item.scale.end}`}
+                    : `${item.scale['start']}~${item.scale['end']}`}
                 </text>
               </DiscreteBarTextBoxStyle>
             </>

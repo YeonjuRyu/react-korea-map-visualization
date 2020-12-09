@@ -1,15 +1,18 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as d3 from 'd3';
 import KoreaMap from '../KoreaMap/KoreaMap';
-import { DEFAULT_MAP_OPTIONS } from '../../public/Constants';
+import { DEFAULT_MAP_OPTIONS } from '../Constants';
 
 const Scatter = ({ data, scale = 'provinces' }) => {
   const [zoomScale, setZoomScale] = useState(1);
   let projection = d3
     .geoMercator()
-    .center(DEFAULT_MAP_OPTIONS.CENTER)
+    .center([DEFAULT_MAP_OPTIONS.CENTER[0], DEFAULT_MAP_OPTIONS.CENTER[1]])
     .scale(DEFAULT_MAP_OPTIONS.SCALE)
-    .translate(DEFAULT_MAP_OPTIONS.TRANSLATE);
+    .translate([
+      DEFAULT_MAP_OPTIONS.TRANSLATE[0],
+      DEFAULT_MAP_OPTIONS.TRANSLATE[1],
+    ]);
 
   return (
     <KoreaMap onZoomScaleChange={setZoomScale}>

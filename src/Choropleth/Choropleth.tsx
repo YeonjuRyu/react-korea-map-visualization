@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as d3 from 'd3';
-import * as topojson from 'topojson';
+import * as topojson from 'topojson-client';
 import { ZoomButton } from '../utils';
-import { ADMIN_LEVEL, DEFAULT_MAP_OPTIONS } from '../../public/Constants';
+import { ADMIN_LEVEL, DEFAULT_MAP_OPTIONS } from '../Constants';
 import styled from 'styled-components';
 import { getTextPosition } from '../KoreaMap/KoreaMap';
 
@@ -15,9 +15,10 @@ const RegionStyle = styled.path`
   }
 `;
 
-const KoreaMap = ({
+const Choropleth = ({
   defaultColor = '#f2f8ff',
   borderColor = '#ffffff',
+  containerStyle = { width: 500, height: 500 },
   data,
   colors,
   adminLevel = 'provinces',
@@ -27,7 +28,7 @@ const KoreaMap = ({
   styledOnHover = {},
   onRegionHover = ({}): any => {},
 }) => {
-  const [geoData, setGeoData] = useState();
+  const [geoData, setGeoData] = useState<any>();
   const [adminLv, setAdminLv] = useState(adminLevel);
   const [scale, setScale] = useState(1);
   const [_data, setData] = useState(data);
@@ -37,7 +38,9 @@ const KoreaMap = ({
     let filename = ADMIN_LEVEL[adminLv].filename;
     let feature = ADMIN_LEVEL[adminLv].feature;
     let data = require(`../../public/${filename}`);
-    setGeoData(topojson.feature(data, data.objects[`${feature}`]));
+    if (data) {
+      setGeoData(topojson.feature(data, data.objects[`${feature}`]));
+    }
   }, [ADMIN_LEVEL, adminLv]);
 
   useEffect(() => {
@@ -60,12 +63,15 @@ const KoreaMap = ({
   //projection with geoMercator
   let projection = d3
     .geoMercator()
-    .center(DEFAULT_MAP_OPTIONS.CENTER)
+    .center([DEFAULT_MAP_OPTIONS.CENTER[0], DEFAULT_MAP_OPTIONS.CENTER[1]])
     .scale(DEFAULT_MAP_OPTIONS.SCALE)
-    .translate(DEFAULT_MAP_OPTIONS.TRANSLATE);
+    .translate([
+      DEFAULT_MAP_OPTIONS.TRANSLATE[0],
+      DEFAULT_MAP_OPTIONS.TRANSLATE[1],
+    ]);
   // 패스 작성
   var path = d3.geoPath().projection(projection);
-
+  let svg: any = d3.select('.regionGroup');
   //zoom in/out 기능 추가
   let zoom = d3
     .zoom()
@@ -73,8 +79,6 @@ const KoreaMap = ({
     .on('zoom', () => {
       svg.attr('transform', d3.zoomTransform(svg.node()));
     });
-
-  let svg = d3.select('.regionGroup');
 
   if (zoomable) {
     svg.call(zoom);
@@ -110,7 +114,11 @@ const KoreaMap = ({
   }, [isAdminLevelChanged, scale]);
 
   return (
-    <div style={{ backgroundColor: 'lightGrey', paddingRight: 0 }}>
+    <div
+      style={{
+        backgroundColor: 'lightGrey',
+        paddingRight: 0,
+      }}>
       {zoomable && (
         <ZoomButton
           style={{ padding: 10, position: 'absolute' }}
@@ -118,7 +126,7 @@ const KoreaMap = ({
           onClickZoomOut={onClickZoomOutHandler}
         />
       )}
-      <svg>
+      <svg style={containerStyle}>
         <g className={'regionGroup'}>
           {geoData &&
             geoData.features.map(item => {
@@ -166,4 +174,4 @@ const KoreaMap = ({
   );
 };
 
-export default KoreaMap;
+export default Choropleth;

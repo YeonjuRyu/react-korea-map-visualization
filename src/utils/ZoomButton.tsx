@@ -10,21 +10,23 @@ const ButtonContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const ButtonImage = styled.img`
-  width: 12px;
-  height: 12px;
-`;
 
 const ZoomButton = props => {
   return (
-    <div style={{ ...props?.style, display: 'flex', flexDirection: 'column' }}>
-      <ButtonContainer onClick={props.onClickZoomIn}>
-        <ButtonImage src={require('../../public/icons/001-add.svg')} />
-      </ButtonContainer>
-      <ButtonContainer onClick={props.onClickZoomOut}>
-        <ButtonImage src={require('../../public/icons/002-minus.svg')} />
-      </ButtonContainer>
-    </div>
+    <>
+      <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+        rel="stylesheet"></link>
+      <div
+        style={{ ...props?.style, display: 'flex', flexDirection: 'column' }}>
+        <ButtonContainer onClick={props.onClickZoomIn}>
+          <i className="fas fa-plus" />
+        </ButtonContainer>
+        <ButtonContainer onClick={props.onClickZoomOut}>
+          <i className="fas fa-minus" />
+        </ButtonContainer>
+      </div>
+    </>
   );
 };
 

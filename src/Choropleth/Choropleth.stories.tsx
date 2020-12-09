@@ -1,6 +1,5 @@
 import React from 'react';
 import Choropleth from './Choropleth';
-import { ChoroplethData, ChoroplethColor } from './Choropleth.types';
 import { withKnobs, text, boolean } from '@storybook/addon-knobs';
 import ColorBar from './ColorBar';
 
@@ -10,7 +9,7 @@ export default {
   decorators: [withKnobs],
 };
 
-let dummyData: ChoroplethData = [
+let dummyData = [
   { regionCode: '11', grade: 1 },
   { regionCode: '26', grade: 2 },
   { regionCode: '27', grade: 3 },
@@ -24,7 +23,7 @@ let dummyData: ChoroplethData = [
 let dummyColors = [
   { color: 'skyblue', scale: 1 },
   { color: 'blue', scale: 2 },
-  { color: '#000066', scale: 3 }
+  { color: '#000066', scale: 3 },
 ];
 
 export const Provinces = () => {
@@ -40,13 +39,12 @@ export const Provinces = () => {
 
 export const Provinces2 = () => (
   <div>
-    <ColorBar
-      theme={'discrete'}
-      align={'to right'}
-      data={dummyColors}
-    />
+    <ColorBar theme={'discrete'} align={'to right'} data={dummyColors} />
     <Choropleth
-      styledOnHover={{fill:'red', filter: 'drop-shadow( 20px 20px 20px black)'}}
+      styledOnHover={{
+        fill: 'red',
+        filter: 'drop-shadow( 20px 20px 20px black)',
+      }}
       data={dummyData}
       colors={dummyColors}
       defaultColor={'#faf5eb'}
@@ -56,12 +54,16 @@ export const Provinces2 = () => (
 );
 
 export const Municipalitie = () => (
-  <Choropleth adminLevel={'municipalitie'} data={dummyData} colors={dummyColors} />
+  <Choropleth
+    adminLevel={'municipalitie'}
+    data={dummyData}
+    colors={dummyColors}
+  />
 );
 
 export const Submunicipalities = () => (
   <Choropleth
-  adminLevel={'submunicipalities'}
+    adminLevel={'submunicipalities'}
     data={dummyData}
     colors={dummyColors}
   />
