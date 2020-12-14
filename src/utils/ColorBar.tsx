@@ -16,13 +16,9 @@ type ColorBarPropType = {
 };
 
 type ColorBarDataType = {
-  scale: number | ColorBarRangeType;
+  level?: number;
+  range?: { start: number; end: number };
   color: string;
-};
-
-type ColorBarRangeType = {
-  start: number | string;
-  end: number | string;
 };
 
 const LinearContainerStyle = styled.div`
@@ -112,18 +108,15 @@ const ColorBar = ({
         <LinearGradientTextContainerStyle
           style={colorBarTextContainerStyle}
           isAlignHorizontal={isAlignHorizontal}>
-          {console.log(typeof data[0].scale)}
-          {typeof data[0].scale === 'number' ? (
+          {data[0].level ? (
             <>
-              <text style={textStyle}>{data[0].scale}</text>
-              <text style={textStyle}>{data[data.length - 1].scale}</text>
+              <text style={textStyle}>{data[0].level}</text>
+              <text style={textStyle}>{data[data.length - 1].level}</text>
             </>
           ) : (
             <>
-              <text style={textStyle}>{data[0].scale['start']}</text>
-              <text style={textStyle}>
-                {data[data.length - 1].scale['end']}
-              </text>
+              <text style={textStyle}>{data[0]['start']}</text>
+              <text style={textStyle}>{data[data.length - 1]['end']}</text>
             </>
           )}
         </LinearGradientTextContainerStyle>
@@ -150,9 +143,9 @@ const ColorBar = ({
                 style={colorBarTextContainerStyle}
                 isAlignHorizontal={isAlignHorizontal}>
                 <text style={textStyle}>
-                  {typeof item.scale === 'number'
-                    ? item.scale
-                    : `${item.scale['start']}~${item.scale['end']}`}
+                  {typeof item.level
+                    ? item.level
+                    : `${item.range.start}~${item.range.end}`}
                 </text>
               </DiscreteBarTextBoxStyle>
             </>

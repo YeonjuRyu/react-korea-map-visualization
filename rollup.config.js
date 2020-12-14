@@ -7,6 +7,7 @@ import svgr from '@svgr/rollup';
 import url from '@rollup/plugin-url';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import copy from 'rollup-plugin-copy';
+import alias from '@rollup/plugin-alias';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx', '.json']; // 어떤 확장자를 처리 할 지 정함
 
@@ -34,6 +35,9 @@ export default {
     }),
     copy({
       targets: [{ src: 'public', dest: 'dist' }],
+    }),
+    alias({
+      entries: [],
     }),
   ],
   output: [

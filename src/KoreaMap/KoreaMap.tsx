@@ -2,9 +2,9 @@ import React, { useEffect, useState, useCallback, Dispatch } from 'react';
 import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
 import { ZoomButton } from '../utils';
-import { ADMIN_LEVEL, DEFAULT_MAP_OPTIONS } from '../Constants';
+import { ADMIN_LEVEL, DEFAULT_MAP_OPTIONS } from '../../public/Constants';
 
-type KoreaMapPropType = {
+export interface KoreaMapPropType {
   backgroundColor?: string;
   borderColor?: string;
   adminLevel?: 'provinces' | 'municipalitie' | 'submunicipalities';
@@ -16,7 +16,9 @@ type KoreaMapPropType = {
   onRegionHover?;
   containerStyle?;
   mapStyle?;
-};
+  zoomButtonStyle?;
+  getRegionsPosition?;
+}
 
 export const getTextPosition = (center, name) => {
   let x = center[0] - 15;
@@ -50,6 +52,8 @@ const KoreaMap = ({
   zoomable = true,
   onZoomScaleChange,
   onRegionHover,
+  zoomButtonStyle,
+  getRegionsPosition = () => {},
 }: KoreaMapPropType) => {
   const [geoData, setGeoData] = useState<any>();
   // const [isTextVisible, setIsTextVisible] = useState(false);
@@ -120,19 +124,49 @@ const KoreaMap = ({
   }, [scale]);
 
   const handleOnMouseOver = useCallback(data => {
-    onRegionHover(data);
+    if (onRegionHover) {
+      onRegionHover(data);
+    }
   }, []);
 
+  useEffect(() => {
+    if (geoData) {
+      getRegionPosition(geoData);
+    }
+  }, [geoData]);
+
+  const getRegionPosition = useCallback(
+    geoData => {
+      let res = [];
+      for (let i = 0; i < geoData.features.length; i++) {
+        let obj = new Object();
+        obj['position'] = path.centroid(geoData.features[i].geometry);
+        obj['regionCode'] = geoData.features[i].properties.CD;
+        obj['regionKorName'] = geoData.features[i].properties.KOR_NM;
+        obj['regionEngName'] = geoData.features[i].properties.ENG_NM;
+        res.push(obj);
+      }
+      getRegionsPosition(res);
+    },
+    [geoData],
+  );
+
   return (
-    <div style={containerStyle}>
+    <div style={{ ...containerStyle, width: 500, height: 500 }}>
       {zoomable && (
         <ZoomButton
-          style={{ padding: 10, position: 'absolute' }}
+          style={{
+            padding: 10,
+            position: 'absolute',
+            top: '20px',
+            left: '20px',
+            ...zoomButtonStyle,
+          }}
           onClickZoomIn={onClickZoomInHandler}
           onClickZoomOut={onClickZoomOutHandler}
         />
       )}
-      <svg style={mapStyle}>
+      <svg style={{ ...mapStyle, width: 500, height: 500 }}>
         <g className={'regionGroup'}>
           {geoData &&
             geoData.features.map(item => {
@@ -155,6 +189,7 @@ const KoreaMap = ({
                         : 0.2
                     }
                   />
+
                   {/* {isRegionNameVisible && (
                     <text
                       fontSize={5}

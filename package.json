@@ -1,7 +1,7 @@
 {
   "name": "skmvtest",
   "username": "yeonjuryu",
-  "version": "1.0.7",
+  "version": "1.1.1",
   "description": "한국 지도 데이터 시각화를 위한 리액트 라이브러리 (개발 테스트)",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -47,10 +47,10 @@
     "node-sass": "^4.14.1",
     "react-spring": "^8.0.27",
     "rollup": "^2.34.2",
+    "rollup-plugin-copy": "^3.3.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^3.1.8",
     "rollup-plugin-typescript2": "^0.28.0",
-    "rollup-plugin-copy": "^3.3.0",
     "sass-loader": "^10.0.4",
     "styled-components": "^5.2.1",
     "topojson-client": "^3.1.0",
@@ -64,5 +64,9 @@
   "bugs": {
     "url": "https://github.com/YeonjuRyu/react-korea-map-visualization/issues"
   },
-  "homepage": "https://github.com/YeonjuRyu/react-korea-map-visualization#readme"
+  "homepage": "https://github.com/YeonjuRyu/react-korea-map-visualization#readme",
+  "dependencies": {
+    "@rollup/plugin-alias": "^3.1.1",
+    "react-scripts": "^4.0.1"
+  }
 }

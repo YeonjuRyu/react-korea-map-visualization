@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import KoreaMap from './KoreaMap';
 
 export default {
-  title: '기본 지도',
+  title: 'Background KoreaMap',
   component: KoreaMap,
 };
 
@@ -13,7 +13,6 @@ export const Provinces = () => {
       key={'koreaMap1'}
       adminLevel={'provinces'}
       isRegionNameVisible={true}
-      onZoomScaleChange={x => console.log(x)}
     />
   );
 };
@@ -65,10 +64,8 @@ export const Submunicipalities = () => {
       <KoreaMap
         key={'koreaMa4'}
         adminLevel={'submunicipalities'}
-        data={dummyData}
-        colors={dummyColors}
         onRegionHover={setHoveredRegion}
-      />{' '}
+      />
       {hoveredRegion && (
         <div
           id={'ke'}

@@ -1,17 +1,19 @@
 import KoreaMap from './KoreaMap/KoreaMap';
-import Choropleth from './Choropleth/Choropleth';
-import ColorBar from './Choropleth/ColorBar';
-import Scatter from './Scatter/Scatter';
-import PieChart from './PieChart/PieChart';
-import PieChartMap from './PieChart/PieChartMap';
-import { ZoomButton } from './utils';
+import ChoroplethMap from './ChoroplethMap/ChoroplethMap';
+import PointMap from './PointMap/PointMap';
+import PieChart from './PieChartMap/PieChart';
+import PieChartMap from './PieChartMap/PieChartMap';
+import BubbleMap from './BubbleMap/BubbleMap';
+import { ZoomButton, ColorBar, utils } from './utils';
 
 export {
   KoreaMap,
-  Scatter,
-  Choropleth,
+  PointMap,
+  BubbleMap,
+  ChoroplethMap,
   ColorBar,
   PieChart,
   PieChartMap,
   ZoomButton,
+  utils,
 };

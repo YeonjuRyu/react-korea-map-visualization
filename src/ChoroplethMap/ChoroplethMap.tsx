@@ -2,9 +2,30 @@ import React, { useEffect, useState, useCallback } from 'react';
 import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
 import { ZoomButton } from '../utils';
-import { ADMIN_LEVEL, DEFAULT_MAP_OPTIONS } from '../Constants';
+import { ADMIN_LEVEL, DEFAULT_MAP_OPTIONS } from '../../public/Constants';
 import styled from 'styled-components';
-import { getTextPosition } from '../KoreaMap/KoreaMap';
+import { getTextPosition, KoreaMapPropType } from '../KoreaMap/KoreaMap';
+import getProjection from '../utils/utils';
+
+interface ChoroplethMapPropType extends KoreaMapPropType {
+  data: Array<ChoroplethMapDataType>;
+  colors: Array<ColorDataType>;
+  defaultColor?: string;
+  borderColor?: string;
+  styledOnHover?: object;
+}
+
+type ChoroplethMapDataType = {
+  regionCode: string;
+  level?: number;
+  value?: number;
+};
+
+type ColorDataType = {
+  color: string;
+  level?: number;
+  range?: { start: number; end: number };
+};
 
 const RegionStyle = styled.path`
   fill: ${props => (props.fill ? props.fill : props.defaultColor)};
@@ -15,7 +36,7 @@ const RegionStyle = styled.path`
   }
 `;
 
-const Choropleth = ({
+const ChoroplethMap = ({
   defaultColor = '#f2f8ff',
   borderColor = '#ffffff',
   containerStyle = { width: 500, height: 500 },
@@ -27,12 +48,12 @@ const Choropleth = ({
   zoomable = true,
   styledOnHover = {},
   onRegionHover = ({}): any => {},
-}) => {
+}: ChoroplethMapPropType) => {
   const [geoData, setGeoData] = useState<any>();
   const [adminLv, setAdminLv] = useState(adminLevel);
   const [scale, setScale] = useState(1);
-  const [_data, setData] = useState(data);
-  const [_colors, setColors] = useState(colors);
+  const [_data, setData] = useState<object>(data);
+  // const [_colors, setColors] = useState(colors);
 
   useEffect(() => {
     let filename = ADMIN_LEVEL[adminLv].filename;
@@ -45,30 +66,42 @@ const Choropleth = ({
 
   useEffect(() => {
     flattenData(data);
-    flattenColors(colors);
-  }, [data, colors]);
+  }, [data]);
 
-  const flattenData = useCallback(data => {
-    let result = new Object();
-    data.map(item => (result[item.regionCode] = item.grade));
-    setData({ ...result });
-  }, []);
+  const flattenData = useCallback(
+    data => {
+      let result = new Object();
+      data.map(item => {
+        if (item?.level) {
+          result[item.regionCode] = item.level;
+        } else if (item?.value) {
+          result[item.regionCode] = item.value;
+        }
+      });
+      setData({ ...result });
+    },
+    [data],
+  );
 
-  const flattenColors = useCallback(colors => {
-    let result = new Object();
-    colors.map(item => (result[item.scale] = item.color));
-    setColors({ ...result });
+  const getColor = useCallback((data, colors) => {
+    if (colors[0].level) {
+      for (let i = 0; i < colors.length; i++) {
+        if (colors[i].level === data) {
+          return colors[i].color;
+        }
+      }
+    } else {
+      for (let i = 0; i < colors.length; i++) {
+        if (colors[i].range.start <= data <= colors[i].range.end) {
+          return colors[i].color;
+        }
+      }
+    }
+    return defaultColor;
   }, []);
 
   //projection with geoMercator
-  let projection = d3
-    .geoMercator()
-    .center([DEFAULT_MAP_OPTIONS.CENTER[0], DEFAULT_MAP_OPTIONS.CENTER[1]])
-    .scale(DEFAULT_MAP_OPTIONS.SCALE)
-    .translate([
-      DEFAULT_MAP_OPTIONS.TRANSLATE[0],
-      DEFAULT_MAP_OPTIONS.TRANSLATE[1],
-    ]);
+  let projection = getProjection();
   // 패스 작성
   var path = d3.geoPath().projection(projection);
   let svg: any = d3.select('.regionGroup');
@@ -141,8 +174,8 @@ const Choropleth = ({
                     }
                     d={path(item)}
                     fill={
-                      _colors[_data[item.properties.CD]]
-                        ? _colors[_data[item.properties.CD]]
+                      colors
+                        ? getColor(_data[item.properties.CD], colors)
                         : defaultColor
                     }
                     stroke={borderColor ? borderColor : 'white'}
@@ -174,4 +207,4 @@ const Choropleth = ({
   );
 };
 
-export default Choropleth;
+export default ChoroplethMap;
