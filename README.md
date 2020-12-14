@@ -3,9 +3,9 @@
 
 ## ScreenShots
 <div>
-<img width="300" height="300" alt="Screen Shot 2020-12-12 at 12 14 09 AM" src="https://user-images.githubusercontent.com/44253680/102086887-1d096380-3e5c-11eb-8b0c-fdc72f28fee1.png">
-<img width="300" height="300" alt="Screen Shot 2020-12-14 at 9 00 12 PM" src="https://user-images.githubusercontent.com/44253680/102086763-f0ede280-3e5b-11eb-94fb-d209435c2544.png">
-<img width="300" height="300" alt="Screen Shot 2020-12-14 at 10 33 02 PM" src="https://user-images.githubusercontent.com/44253680/102087082-5fcb3b80-3e5c-11eb-8898-29b2b9ba28c3.png">
+<img width="33%" height="300" alt="Screen Shot 2020-12-12 at 12 14 09 AM" src="https://user-images.githubusercontent.com/44253680/102086887-1d096380-3e5c-11eb-8b0c-fdc72f28fee1.png">
+<img width="33%"" height="300" alt="Screen Shot 2020-12-14 at 9 00 12 PM" src="https://user-images.githubusercontent.com/44253680/102086763-f0ede280-3e5b-11eb-94fb-d209435c2544.png">
+<img width="33%" height="300" alt="Screen Shot 2020-12-14 at 10 33 02 PM" src="https://user-images.githubusercontent.com/44253680/102087082-5fcb3b80-3e5c-11eb-8898-29b2b9ba28c3.png">
 </div>
 
 ## Description
