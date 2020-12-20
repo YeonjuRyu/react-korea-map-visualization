@@ -112,8 +112,11 @@ export const PieChartMapStory = () => {
         valueType={'number'}
         data={data}
         colors={colors}
-        r={10}
+        r={15}
         innerRadius={5}
+        backgroundColor={'rgb(246,246,246)'}
+        borderColor={'#82a3ad'}
+        containerStyle={{ backgroundColor: '#82a3ad' }}
         // onMouseOver={setR}
         // onMouseOut={onMouseOut}
       />

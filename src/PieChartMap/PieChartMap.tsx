@@ -30,7 +30,7 @@ type PieChartMapDataType = {
   lon?: number;
   lat?: number;
   regionCode?: number;
-  regionName?: number;
+  regionName?: string;
   r?: number;
   data: Array<PieChartDataType>;
   innerRadius?: number;
@@ -96,6 +96,7 @@ const PieChartMap = (props: PieCharMapPropType) => {
 
   return (
     <KoreaMap
+      {...props}
       zoomable={true}
       onZoomScaleChange={setZoomScale}
       getRegionsPosition={setRegionPosition}>
